@@ -3,7 +3,7 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from repairsapi.models import ServiceTicket
+from repairsapi.models import ServiceTicket, service_ticket
 from repairsapi.models import Employee
 from repairsapi.models import Customer
 
@@ -79,6 +79,13 @@ class ServiceTicketView(ViewSet):
 
         # Save the updated ticket
         ticket.save()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+    def destroy(self, request, pk=None):
+
+        service_ticket = ServiceTicket.objects.get(pk=pk)
+        service_ticket.delete()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
